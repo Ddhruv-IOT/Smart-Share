@@ -3,26 +3,47 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const spawn = require("child_process").spawn;
-
 const app = express();
 
+app.use(express.json())
+app.use(express.urlencoded({extended: true})); 
 
+/* ------------- Text Sharing Engine ------------- */
 
-app.get('/cp', (req, res) => {
-
-  // const { spawn } = require('child_process');
-  // const pyProg = spawn('python', ['./../pypy.py']);
-  const pyProg = spawn('python',["C:/Users/ACER/Desktop/scr.py"]);
-
-  pyProg.stdout.on('data', function(data) {
-
-      console.log(data.toString());
-      res.write(data);
-      res.end('end');
+// see the copied text on server device
+app.get('/getclipboard', (req, res) => {
+  const pyProg = spawn('python',["./python-plugins/scr.py"]);
+  pyProg.stdout.on('data', function(data) {  
+    res.write(data);
+    res.end('end');
   });
 })
 
+// copy text on server device from other device
+app.get("/pastclipboard", (req, res) => {
+  res.sendFile('/test.html', {root: __dirname })
+});
 
+// process the data from pastclipboard or direct request for copying text
+app.get('/copydataapi', (req, res) => {
+  text = req.query.x;
+  console.log(text)
+  const pyProg = spawn('python', ["./python-plugins/ppr.py", text]);
+  pyProg.stdout.on('data', function(data) {  
+    res.write(data);
+    res.end('end');
+  });
+  res.status(204).send();
+})
+
+// route for clipboard write over post request, flutter connect side
+app.post('/', function(req, res) {
+  data = req.body
+  console.log(data)
+  res.status(201);
+});
+
+/* ------------- File Sharing Engine ------------- */
 
 // Set up the storage engine
 const storage = multer.diskStorage({
@@ -35,7 +56,7 @@ const storage = multer.diskStorage({
 // Initialize the upload middleware
 const upload = multer({
   storage: storage,
-  limits: {fileSize: 10000000000}, // limit the file size to 1 MB
+  limits: {fileSize: 10000000000}, // limit the file size
 }).single('f');
 
 // Set up the public directory for serving uploaded files
@@ -86,12 +107,25 @@ app.get('/', function(req, res) {
 });
 
 // Start the server
-const port = 3000;
+const port = 8000;
 app.listen(port, () => {
-
   console.log(`Server started on port ${port}`);
 });
 
+/*
+res.redirect('/pastclipboard');
+res.status(204).send();
+TODO: Multiupload
 
-
-// TODO: Multiupload
+  Accessble Routes
+  
+  Text based
+  Read server clipboard:              http://192.168.1.5:8000/getclipboard
+  Write to clipboard using form:      http://192.168.1.5:8000/pastclipboard
+  Write to clipboard using api call:  http://192.168.1.5:8000/copydataapi?x={data}
+  
+  File based
+  See all the uploaded files:         http://192.168.1.5:8000/pool
+  Upload a file:                      http://192.168.1.5:8000/
+  
+*/
