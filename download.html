@@ -1,0 +1,35 @@
+<!-- Display the list of files -->
+<table id="files"></table>
+
+<!-- Set up the download link template -->
+<template id="download-link-template">
+  <tr>
+    <td>
+      <a href="/download/{{filename}}" download>{{filename}}</a>
+    </td>
+  </tr>
+</template>
+
+<script>
+  // Send an HTTP GET request to the back-end to get the list of files
+  fetch('/files')
+    .then(response => response.json())
+    .then(files => {
+      // Get the template element
+      const template = document.getElementById('download-link-template');
+      // Get the table element
+      const table = document.getElementById('files');
+
+      // Iterate through the list of files
+      for (const filename of files) {
+        // Clone the template
+        const row = document.importNode(template.content, true);
+        // Set the filename in the template
+        row.querySelector('a').innerHTML = filename;
+        row.querySelector('a').href = `/download/${filename}`;
+        
+        // Append the row to the table
+        table.appendChild(row);
+      }
+    });
+</script>
