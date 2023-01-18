@@ -21,7 +21,7 @@ app.get('/getclipboard', (req, res) => {
 
 // copy text on server device from other device
 app.get("/pastclipboard", (req, res) => {
-  res.sendFile('/test.html', {root: __dirname })
+  res.sendFile('test.html', {root: __dirname + "/pages/" })
 });
 
 // process the data from pastclipboard or direct request for copying text
@@ -98,12 +98,12 @@ app.get('/files', (req, res) => {
 
 // Set up the file download route for client
 app.get('/pool', function(req, res) {
-    res.sendFile('/download.html', {root: __dirname })
+    res.sendFile('download.html', {root: __dirname + "/pages/" })
 });
 
 // Set up the file upload route for client
 app.get('/', function(req, res) {
-  res.sendFile('/upload.html', {root: __dirname })
+  res.sendFile('upload.html', {root: __dirname +"/pages/" })
 });
 
 // Start the server
