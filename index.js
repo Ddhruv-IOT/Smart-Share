@@ -108,8 +108,13 @@ app.get('/', function(req, res) {
 
 // Start the server
 const port = 8000;
+let ip = "o"
 app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
+  const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
+  getIp.stdout.on('data', (ip) => {  
+    console.log(ip.toString())
+    console.log(`Server started on port ${port} ${ip}`);
+  })
 });
 
 /*
