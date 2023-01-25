@@ -11,6 +11,8 @@
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
+        border: 2px solid black;
+     
       }
       
       td, th {
@@ -30,11 +32,11 @@
       <tr>
         <th> S. No </th>
         <th> File Name </th>
-        <th> Extension </th>
+        <th> Ext. </th>
       </tr>
       <template id="download-link-template">
         <tr>
-          <td id="num"> 1. </td>
+          <td id="num"> </td>
           <td>
             <a href="/download/{{filename}}" download>{{filename}}</a>
           </td>
