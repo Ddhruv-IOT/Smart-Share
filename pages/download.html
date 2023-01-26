@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -69,4 +69,127 @@
         });
     </script>
   </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	
+	<div class="main">
+		<div class="num">
+			<h1>1</h1>
+		</div>
+
+		<div class="rect">
+			<a href="www.google.com">
+				Test File 1.mp3Test
+			</a>
+		</div>
+
+		<div class="img">
+			<img src="download.png"/>
+		</div>
+	</div>
+</body>
+
+
+<style type="text/css">
+
+	.main {
+		display: flex;                  
+	  	flex-direction: row;            
+	  	justify-content: space-between ;
+   		align-items: center;
+		margin: 30px;
+		box-sizing: border-box;
+
+		width: 90vw;
+
+		background: rgba(64, 14, 103, 0.47);
+		mix-blend-mode: darken;
+		border: 1px solid #000000;
+		box-shadow: 4px 4px 4px rgba(87, 113, 32, 0.4), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+		border-radius: 30px;
+
+	}
+
+	.main > .num {
+		padding: 10px;
+		display: flex;
+  		justify-content: center;
+  		align-items: center;
+		
+		width: 8%;
+		height: 100%;
+
+		border-radius: 30px 0px 0px 30px;
+		background: rgba(104, 230, 45, 0.87);
+	}
+
+	.main > .rect {
+		display: flex;
+  		justify-content: center;
+  		align-items: center;
+
+		width: 70%;
+		height: 67px;
+
+		background: rgba(217, 217, 217, 0.4);
+		box-shadow: 4px 4px 4px 2px #8058CD, inset 4px 4px 4px 2px rgba(99, 47, 210, 0.7);
+		border-radius: 10px;
+		overflow:hidden;
+	}
+
+	.main > .img{
+		width: 10%;
+	}
+
+	@media screen and (max-width: 550px) {
+  body {
+    background-color: lightgreen;
+  }
+  .main {
+  	align-self: center;
+/*  	padding: 0px 0px 0px 0xp;*/
+  	margin: 30px 20px 0 0;
+		display: flex;                  
+	  	flex-direction: column;            
+/*	  	flex-wrap: nowrap;     */
+height: 25vh;
+width: 95vw;
+}
+.main > .num {
+/*		padding: 10px;*/
+		display: flex;
+  		justify-content: center;
+  		align-items: center;
+  		width: 95%;
+		height: 10%;
+
+		border-radius: 0px 0px 0px 0px;
+		background: rgba(104, 230, 45, 0.87);
+  	}
+
+  	.main > .rect {
+		display: flex;
+  		justify-content: center;
+  		align-items: center;
+
+		width: 99%;
+		height: 30%;
+
+		background: rgba(217, 217, 217, 0.4);
+		box-shadow: 4px 4px 4px 2px #8058CD, inset 4px 4px 4px 2px rgba(99, 47, 210, 0.7);
+		border-radius: 10px;
+		flex-wrap: wrap;
+	}
+}
+</style>
+
 </html>
