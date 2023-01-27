@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <style type="text/css">
     
     *{
@@ -13,6 +14,14 @@
     body{
       padding: 0px;
       margin: 0px;
+    }
+
+    .cpx {
+      padding-top: 7em;
+      display: flex;
+      max-height: 100vh;
+      justify-content: center;
+      align-items: center;
     }
 
     .main {
@@ -56,6 +65,68 @@
     .main > .img {
       width: 10%;
     }
+
+    .nav {
+      padding: 30px; 
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      background-color: black;
+      color: white;
+      font-family: montserrat;
+    }
+
+    label.logo {
+      color: silver;
+      font-size: 35px;
+      line-height: 40px;
+      padding: 0 10px;
+      font-weight: bold;
+      text-shadow: 3px 3px blue;
+      -webkit-text-stroke: 0.1px darkblue;
+    }
+
+    .nav ul {
+      float: right;
+      margin: 0px;
+      padding: 0px;
+      overflow: hidden;
+    }
+
+    .nav li {
+      margin: 13px 20px;
+      float: left;
+      list-style: none;
+      /* display: inline-block; */
+    }
+
+    .nav li a {
+      text-decoration: none;
+      text-shadow: 1px 1px red;
+      color: white; 
+      padding: 7px 13px;
+      border-radius: 10px;
+      text-transform: uppercase;
+    }
+
+    a.active, a:hover {
+      background-color: #1b9bff;
+      transition: 0.5s;
+    }
+
+    .checkbtn {
+      font-size: 30px;
+      color: white;
+      float: right;
+      line-height: 40px;
+      margin-right: 20px;
+      cursor: pointer;
+      display: none;
+    }
+
+    #check{
+      display: none;
+    }
   
     @media screen and (max-width: 550px) {
       
@@ -87,66 +158,58 @@
         max-height: 50vh;
       }
 
-      .main > .img{
-      width: 10%;
+      .main > .img {
+        width: 10%;
+      }
+
+      .nav ul {
+        position: fixed;
+        width: 80%;
+        background: #2c3e50;
+        top: 0px;
+        left: -100%;
+        text-align: center;
+        /* display: block; */
+        float: unset;
+        transition: all .5s;
+        line-height: 100%;
+        height: 100vh;
+      }
+
+      .nav li {
+        display: block;
+        float: unset;
+        clear: both;
+      }
+
+      .checkbtn {
+        display: block;
+      }
+
+      .nav li a {
+        font-size: 20px;
+      }
+
+      a:hover, a.active {
+        background: none;
+        color: #8058CD;
+      }
+
+      #check:checked ~ ul{
+        left: -25%;
+      }
+  }
+
+
+  @media (max-width: 952px) {
+    label.logo {
+      font-size: 30px;
+      padding-left: 50px;
     }
 
-   .nav ul {
-      position: fixed;
-      width: 100%;
-      /* height: 100vh; */
-      background: #2c3e50;
-      top: 0px;
-      left: 0;
-      text-align: center;
-      display: block;
-      float: unset;
+    .nav li a{
+      font-size: 16px;
     }
-
-    .nav li {
-      display: block;
-      float: unset;
-      clear: both;
-    }
-
-  }
-
-  
-
-  .cpx {
-    padding-top: 4em;
-    display: flex;
-    max-height: 100vh;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .nav {
-    /* display: flex; */
-    padding: 10px;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    background-color: black;
-    color: white;
-  }
-
-  .nav ul {
-    margin: 0px;
-    padding: 0px;
-    overflow: hidden;
-  }
-
-  .nav li {
-    margin: 13px 20px;
-    float: left;
-    list-style: none;
-  }
-
-  .nav li a {
-    padding: 3px;
-    text-decoration: none;
-    color: white;
   }
 
   </style>
@@ -155,8 +218,13 @@
 
 	<header>
     <nav class="nav">
+      <input type="checkbox" id="check" />
+      <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+      </label>
+      <label class="logo"> D.Star Server </label>
       <ul>
-        <li><a href="#"> Home </a></li>
+        <li><a href="#" class="active"> Home </a></li>
         <li><a href="#"> Upload </a></li>
         <li><a href="#"> Download </a></li>
         <li><a href="#"> About </a></li>
