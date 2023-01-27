@@ -1,86 +1,130 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Pool Page </title>
-
-    <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-        border: 2px solid black;
-     
-      }
-      
-      td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-      
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-      </style>
-  </head>
-
-  <body>
-    <table id="files">
-      <tr>
-        <th> S. No </th>
-        <th> File Name </th>
-        <th> Ext. </th>
-      </tr>
-      <template id="download-link-template">
-        <tr>
-          <td id="num"> </td>
-          <td>
-            <a href="/download/{{filename}}" download>{{filename}}</a>
-          </td>
-          <td> txt </td>
-        </tr>
-      </template>
-    </table>
-
-    <script>
-      // Send an HTTP GET request to the back-end to get the list of files
-      fetch('/files')
-        .then(response => response.json())
-        .then(files => {
-          const template = document.getElementById('download-link-template');
-          const table = document.getElementById('files');
-          let i = 0;
-          for (const filename of files) {
-            // Clone the template
-            i = i + 1;
-
-            const row = document.importNode(template.content, true);
-            // Set the filename in the template
-            row.getElementById('num').innerHTML = i;
-            row.querySelector('a').innerHTML = filename;
-            row.querySelector('a').href = `/download/${filename}`;
-            
-            // Append the row to the table
-            table.appendChild(row);
-          }
-        });
-    </script>
-  </body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
+  <style type="text/css">
+    
+    *{
+      box-sizing: border-box;
+    }
+
+    body{
+      padding: 0px;
+      margin: 0px;
+      box-sizing: border-box;
+    }
+
+    .main {
+      display: flex;                  
+      flex-direction: row;            
+      justify-content: space-between ;
+      align-items: center;
+      margin: 30px;
+      width: 90vw;
+      background: rgba(64, 14, 103, 0.47);
+      mix-blend-mode: darken;
+      border: 1px solid #000000;
+      box-shadow: 4px 4px 4px rgba(87, 113, 32, 0.4), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 30px;
+    }
+  
+    .main > .num {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      width: 8%;
+      height: 100%;
+      border-radius: 30px 0px 0px 30px;
+      background: rgba(104, 230, 45, 0.87);
+    }
+  
+    .main > .rect {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 70%;
+      height: 67px;
+      background: rgba(217, 217, 217, 0.4);
+      box-shadow: 4px 4px 4px 2px #8058CD, inset 4px 4px 4px 2px rgba(99, 47, 210, 0.7);
+      border-radius: 10px;
+      overflow:auto;
+      scroll-behavior: smooth;
+    }
+  
+    .main > .img{
+      width: 10%;
+    }
+  
+    @media screen and (max-width: 550px) {
+      
+      body {
+        background-color: lightgreen;
+      }
+  
+      .main {
+        /* position: relative; */
+        flex-direction: column;            
+        min-width: 50vw;
+        width: 95vw; /*n*/
+        height: auto;
+        min-height: 50vh;
+        max-height: 100vh;
+      }
+  
+      .main > .num {
+        /* position: absolute; */
+        /* top: 0; */
+        width: 100%;
+        max-height: 5vh; 
+        border-radius: 30px 30px 0px 0px;
+        }
+  
+      .main > .rect {
+        /* position: absolute; */
+        /* top: 6vh; */
+        margin: 20px;
+        width: 95%;
+        overflow: auto; 
+        height: 15vh;
+        min-height: 10vh;
+        max-height: 50vh;
+      }
+
+      .main > .img{
+      width: 10%;
+      /* position: absolute; */
+        /* top: 80%; */
+    }
+  }
+
+  .nav {
+    height: 30px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    background-color: red;
+    color: lime;
+  }
+
+  .cpx {
+    /* position: relative; */
+    padding-top: 30px;
+    display: flex;
+    max-height: 100vh;
+      justify-content: center;
+      align-items: center;
+  }
+
+  </style>
 </head>
 <body>
-	
+	<div class="nav">
+      hello
+  </div>
+  <div class="cpx">
 	<div class="main">
 		<div class="num">
 			<h1>1</h1>
@@ -96,87 +140,10 @@
 			<img src="http://localhost:8000/dw.png"/>
 		</div>
 	</div>
+  </div>
 </body>
 
 
-<style type="text/css">
 
-	.main {
-    display: flex;                  
-    flex-direction: row;            
-    justify-content: space-between ;
-    align-items: center;
-    margin: 30px;
-    box-sizing: border-box;
-    width: 90vw;
-    background: rgba(64, 14, 103, 0.47);
-    mix-blend-mode: darken;
-    border: 1px solid #000000;
-    box-shadow: 4px 4px 4px rgba(87, 113, 32, 0.4), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-	}
-
-	.main > .num {
-		display: flex;
-    justify-content: center;
-    align-items: center;
-		padding: 10px;
-		width: 8%;
-		height: 100%;
-		border-radius: 30px 0px 0px 30px;
-		background: rgba(104, 230, 45, 0.87);
-	}
-
-	.main > .rect {
-		display: flex;
-    justify-content: center;
-    align-items: center;
-		width: 70%;
-		height: 67px;
-		background: rgba(217, 217, 217, 0.4);
-		box-shadow: 4px 4px 4px 2px #8058CD, inset 4px 4px 4px 2px rgba(99, 47, 210, 0.7);
-		border-radius: 10px;
-		overflow-y: scroll;
-    scroll-behavior: smooth;
-	}
-
-	.main > .img{
-		width: 10%;
-	}
-
-	@media screen and (max-width: 550px) {
-    
-    body {
-      background-color: lightgreen;
-    }
-
-    .main {
-      margin: 30px 20px 0 0;          
-      flex-direction: column;            
-      width: 95vw;
-      height: auto;
-      min-height: 25vh;
-      max-height: 50vh;
-    }
-
-    .main > .num {
-      width: 95%;
-      max-height: 5vh; 
-      /* height: auto; */
-      /* height: 20px; */
-      border-radius: 30px 30px 0px 0px;
-      }
-
-    .main > .rect {
-      margin: 20px;
-      width: 95%;
-      overflow: scroll;
-      height: 15vh;
-      min-height: 10vh;
-      max-height: 50vh;
-    }
-
-}
-</style>
 
 </html>
