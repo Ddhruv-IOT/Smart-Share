@@ -165,11 +165,13 @@
       .nav ul {
         position: fixed;
         width: 80%;
-        background: #2c3e50;
+        /* background: #020b14; */
+        background-color: #000000;
+        background-color: rgba(0, 0, 0, 1);
         top: 0px;
         left: -100%;
         text-align: center;
-        /* display: block; */
+        display: block;
         float: unset;
         transition: all .5s;
         line-height: 100%;
@@ -180,6 +182,7 @@
         display: block;
         float: unset;
         clear: both;
+        padding: 15px 0;
       }
 
       .checkbtn {
@@ -187,12 +190,14 @@
       }
 
       .nav li a {
-        font-size: 20px;
+        /* background: none; */
+        background-color: red;
+        color: brown;
+        padding: 30px;
       }
 
       a:hover, a.active {
         background: none;
-        color: #8058CD;
       }
 
       #check:checked ~ ul{
