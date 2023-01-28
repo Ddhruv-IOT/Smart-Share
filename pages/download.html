@@ -17,7 +17,7 @@
       margin: 0px;
     }
 
-    .cpx {
+    .container {
       padding-top: 7em;
       display: flex;
       max-height: 100vh;
@@ -126,6 +126,14 @@
     #check{
       display: none;
     }
+
+    @media (max-width: 352px) {
+      label.logo {
+      font-weight: bold;
+      font-size: 25px;
+      padding-left: 0px;
+      }
+    }
   
     @media screen and (max-width: 550px) {
       
@@ -162,7 +170,14 @@
         width: 10%;
       }
 
-      .nav ul {
+      
+  }
+
+  @media screen and (max-width: 850px){
+    .main {
+      mix-blend-mode: normal;
+    }
+    .nav ul {
         position: fixed;
         width: 50%;
         background: #000;
@@ -198,25 +213,17 @@
       #check:checked ~ ul{
         left: 0%;
       }
+    
   }
 
-  @media (max-width: 952px) {
+  @media (max-width: 930px ) {
     label.logo {
-      font-size: 35px;
-      padding-left: 5px;
+      font-size: 30px;
+      font-weight: 400;
     }
 
     .nav li a{
       font-size: 15px;
-      padding: 10px;
-      margin: 10px;
-    }
-  }
-
-  @media (max-width: 352px) {
-    label.logo {
-      font-size: 20px;
-      padding-left: 0px;
     }
   }
 
@@ -240,25 +247,22 @@
     </nav>
   </header>
 
-  <div class="cpx">
-	<div class="main">
-		<div class="num">
-			<h1>1</h1>
-		</div>
-
-		<div class="rect">
-			<a href="www.google.com">
-				<p class="op">TestFile </p>
-		</a>
+  <div class="container">
+    <div class="main">
+      <div class="num">
+        <h1>1</h1>
       </div>
 
-		<div class="img">
-			<img src="http://localhost:8000/dw.png"/>
-		</div>
-	</div>
+      <div class="rect">
+        <a href="www.google.com">
+          <p class="op">TestFile </p>
+      </a>
+        </div>
+
+      <div class="img">
+        <img src="http://localhost:8000/dw.png"/>
+      </div>
+    </div>
   </div>
 </body>
-
 </html>
-
-<!-- 818 540 -->
