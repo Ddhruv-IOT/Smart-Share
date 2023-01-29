@@ -7,6 +7,7 @@ const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
+app.use(express.static(__dirname+'/public/code/'));
 app.use(express.static(__dirname+'/public/'));
 /* ------------- Text Sharing Engine ------------- */
 
@@ -107,7 +108,7 @@ app.get('/', function(req, res) {
 });
 
 // Start the server
-const port = 8000;
+const port = 80;
 let ip = "o"
 app.listen(port, () => {
   const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
