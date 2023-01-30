@@ -17,6 +17,7 @@ fetch('/files').then(response => response.json()).then(files => {
           row.querySelector('a').innerHTML = filename;
           row.querySelector('a').href = `/download/${filename}`;
           row.querySelector('img').src = imageObjectURL;
+          row.getElementById('dbtn').href = `/download/${filename}`;
           // Append the row to the table
           table.appendChild(row);
         }
