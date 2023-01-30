@@ -1,4 +1,109 @@
-<form action="upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="f"><br>
-    <input type="submit">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <link rel="stylesheet" href="../public/code/index.css"/> -->
+    <link rel="stylesheet" href="/code/index.css"/>
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <nav class="nav">
+          <input type="checkbox" id="check" />
+          <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+          </label>
+          <label class="logo"> D.Star Server </label>
+          <ul>
+            <li><a href="#" class="active"> Home </a></li>
+            <li><a href="/"> Upload </a></li>
+            <li><a href="/pool"> Download </a></li>
+            <li><a href="/getclipboard"> Copy </a></li>
+            <li><a href="/pastclipboard"> Paste </a></li>
+            <li><a target="_blank" href="https://github.com/Ddhruv-IOT/Smart-Share"> About </a></li>
+          </ul>
+        </nav>
+    </header>
+    
+    <div class="file-component" id="con">
+        <template class="template" id="template">
+            <div class="container" id="container">
+                <div class="main" id="main">
+                    <div class="num">
+                        <h1 id="num">1</h1>
+                    </div>
+                    <div class="rect">
+                        <a href="#" class="op"></a>
+                    </div>
+                    <div class="img">
+                        <button type="submit">
+                            <a href="#" id="dbtn">
+                                <img src="#"/>
+                            </a>
+                        </button>
+                    </div> 
+                </div>
+            </div>
+        </template>
+        </div>
+
+    <script>
+        window.onload = ()=> {
+
+            // var input = document.querySelector('input[type="file"]');
+            // var formData = new FormData();
+            // input.addEventListener('change', function(event) {
+            //     formData.append('f', input.files[0]);
+            //     var xhr = new XMLHttpRequest();
+            //     xhr.open('POST', '/upload', true);
+            //     xhr.upload.onprogress = function(event) {
+            //         // alert((event.loaded /event.total)*100)
+            //         // Handle progress events
+            //     };
+            //     xhr.onload = function(event) {
+            //          // Handle success or failure
+            //         // alert(event)
+            //     };
+            //     xhr.send(formData);
+            // });
+
+            var fileInput = document.querySelector('#fileInput');
+  var uploadButton = document.querySelector('#uploadButton');
+
+  uploadButton.addEventListener('click', function() {
+    var formData = new FormData();
+    formData.append('f', fileInput.files[0]);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload', true);
+
+    xhr.upload.onprogress = function(event) {
+      // Handle progress events
+    };
+
+    xhr.onload = function() {
+      // Handle success or failure
+    };
+
+    xhr.send(formData);
+  });
+        }
+    </script>
+
+        <!-- <form   onclick="uploadFile()" enctype="multipart/form-data">
+            <input type="file" name="f" id="f"><br>
+            <input type="submit">
+        </form> -->
+
+        <form >
+            <input type="file" name="f" id="fileInput">
+            <button type="button" id="uploadButton">Upload</button>
+          </form>
+</body>
+action="upload"
+</html>
