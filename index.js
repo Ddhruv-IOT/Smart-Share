@@ -88,6 +88,13 @@ app.get('/download/:filename', (req, res) => {
 app.get('/files', (req, res) => {
 // Use the fs module to read the contents of the folder
   fs.readdir('./public/uploads', (err, files) => {
+    files.sort((a, b) => {
+      directoryPath = "./public/uploads"
+      const fileA = path.join(directoryPath, a);
+      const fileB = path.join(directoryPath, b);
+  
+      return fs.statSync(fileB).mtime.getTime() - fs.statSync(fileA).mtime.getTime();
+    });
     if (err) {
       res.send(err);
     } else {
@@ -121,7 +128,7 @@ app.listen(port, () => {
 /*
 res.redirect('/pastclipboard');
 res.status(204).send();
-TODO: file sequence new first for download
+TODO: 
 
   Accessble Routes
   
