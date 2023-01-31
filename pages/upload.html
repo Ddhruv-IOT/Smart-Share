@@ -50,66 +50,44 @@
                 </div>
             </div>
         </template>
-        </div>
+    </div>
+
+    <form>
+        <input type="file" name="f" id="fileInput"  multiple>
+        <button type="button" id="uploadButton"> Upload </button>
+    </form>
 
     <script>
         window.onload = ()=> {
-
-            // var input = document.querySelector('input[type="file"]');
-            // var formData = new FormData();
-            // input.addEventListener('change', function(event) {
-            //     formData.append('f', input.files[0]);
-            //     var xhr = new XMLHttpRequest();
-            //     xhr.open('POST', '/upload', true);
-            //     xhr.upload.onprogress = function(event) {
-            //         // alert((event.loaded /event.total)*100)
-            //         // Handle progress events
-            //     };
-            //     xhr.onload = function(event) {
-            //          // Handle success or failure
-            //         // alert(event)
-            //     };
-            //     xhr.send(formData);
-            // });
-
+            
             var fileInput = document.querySelector('#fileInput');
-  var uploadButton = document.querySelector('#uploadButton');
+            var uploadButton = document.querySelector('#uploadButton');
 
-  uploadButton.addEventListener('click', function() {
-    var formData = new FormData();
-   // formData.append('f', fileInput.files[0]); single file
-   var files = fileInput.files;//e.target.files;
-    for (var i = 0; i < files.length; i++) {
-    formData.append("f", files[i]);
-  }
+            uploadButton.addEventListener('click', function() {
+                var formData = new FormData();
+                var files = fileInput.files;
+                
+                for (var i = 0; i < files.length; i++) {
+                    formData.append("f", files[i]);
+                }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/upload', true);
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/upload', true);
 
-    xhr.upload.onprogress = function(event) {
-      // Handle progress events
-      console.log((event.loaded /event.total)*100)
-    };
+                xhr.upload.onprogress = function(event) {
+                    // Handle progress events
+                    console.log((event.loaded /event.total)*100)
+                };
 
-    xhr.onload = function() {
-      // Handle success or failure
-      console.log(event.returnValue)
-    };
+                xhr.onload = function() {
+                    // Handle success or failure
+                    console.log(event.returnValue)
+                    document.getElementById("fileInput").value = "";
+                };
 
-    xhr.send(formData);
-  });
+                xhr.send(formData);
+            });
         }
     </script>
-
-        <!-- <form   onclick="uploadFile()" enctype="multipart/form-data">
-            <input type="file" name="f" id="f"><br>
-            <input type="submit">
-        </form> -->
-
-        <form >
-            <input type="file" name="f" id="fileInput"  multiple>
-            <button type="button" id="uploadButton">Upload</button>
-          </form>
 </body>
-action="upload"
 </html>
