@@ -58,7 +58,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits: {fileSize: 10000000000}, // limit the file size
-}).array('f', 15);//single('f');
+}).array('f', 15);
 
 // Set up the public directory for serving uploaded files
 app.use(express.static('./public'));
@@ -121,7 +121,7 @@ app.listen(port, () => {
 /*
 res.redirect('/pastclipboard');
 res.status(204).send();
-TODO: Multiupload
+TODO: file sequence new first for download
 
   Accessble Routes
   
