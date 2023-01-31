@@ -58,7 +58,7 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits: {fileSize: 10000000000}, // limit the file size
-}).single('f');
+}).array('f', 15);//single('f');
 
 // Set up the public directory for serving uploaded files
 app.use(express.static('./public'));
