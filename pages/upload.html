@@ -6,12 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- <link rel="stylesheet" href="../public/code/index.css"/> -->
+    <link rel="stylesheet" href="../public/code/index.css"/>
     <link rel="stylesheet" href="/code/index.css"/>
     <title>Document</title>
+    <link rel="stylesheet" href="upload.css">
 </head>
 
 <body>
+    <div class="mtio">
     <header>
         <nav class="nav">
           <input type="checkbox" id="check" />
@@ -29,33 +31,29 @@
           </ul>
         </nav>
     </header>
-    
-    <div class="file-component" id="con">
-        <template class="template" id="template">
-            <div class="container" id="container">
-                <div class="main" id="main">
-                    <div class="num">
-                        <h1 id="num">1</h1>
-                    </div>
-                    <div class="rect">
-                        <a href="#" class="op"></a>
-                    </div>
-                    <div class="img">
-                        <button type="submit">
-                            <a href="#" id="dbtn">
-                                <img src="#"/>
-                            </a>
-                        </button>
-                    </div> 
-                </div>
-            </div>
-        </template>
-    </div>
 
-    <form>
+    <!-- <form>
         <input type="file" name="f" id="fileInput"  multiple>
         <button type="button" id="uploadButton"> Upload </button>
-    </form>
+    </form> -->
+
+    <div class="cover">
+    <div class="rmain">
+        <div class="rholder">
+            <div class="rimg">
+                <img src="../public/dw.png""/>
+            </div>
+            <div class="rtxt">
+                <p> Drag your files here<br/> OR</p>
+                <!-- <p>  </p> -->
+            </div>
+            <div class="rbtn-browse"> Browse </div>
+            <div class="rbtn-submit"> Submnit</div>
+        </div>
+        <div class="rloder"></div>
+    </div>
+</div>
+    </div>
 
     <script>
         window.onload = ()=> {
