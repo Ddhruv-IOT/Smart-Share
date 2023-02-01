@@ -12,7 +12,6 @@
   }
 
   .container {
-    
     padding: 0%;
     display: flex;
     max-height: 100vh;
@@ -174,8 +173,6 @@
     .main > .img {
       width: 10%;
     }
-
-    
 }
 
 @media screen and (max-width: 1250px){ /*850 to 1250*/
