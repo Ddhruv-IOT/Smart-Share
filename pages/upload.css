@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+.mtio {
+    width: 100vw;
+    height: 100vh;
+    
+}
+
+.cover {
+    height: auto;
+    margin-top: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rmain{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 30px;
+    width: 50vw;
+    height: 50vh;
+    background: rgba(51, 93, 132, 0.22);
+    border-radius: 45px;
+}
+
+.rmain > .rholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 70%;
+    background: rgba(122, 154, 201, 0.45);
+    border: 2px dashed #000000;
+    border-radius: 30px;
+}
+
+.rholder > .rimg {
+    height: auto;
+}
+
+.rholder > .rtxt {
+    font-size: 17px;
+    line-height: 25px;
+    text-align: center;
+    color: #62646f;
+}
+
+.rholder > .rbtn-browse{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    max-width:30%;
+    width: 25%;
+    min-width: 15%;
+    height: 38px;
+    background: #6427B3;
+}
+
+.rholder > .rbtn-submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    max-width: 60%;
+    width: 40%;
+    min-width: 15%;
+    height: 30px;
+    background: rgba(244, 236, 236, 0.58);
+}
+
+.rmain > .rloder {
+    margin: 20px 20px 0px 20px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 7px;
+    background: #3b6bd4;
+}
+
