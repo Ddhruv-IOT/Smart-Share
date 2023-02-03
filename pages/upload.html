@@ -15,45 +15,50 @@
 
 <body>
     <div class="mtio">
-    <header>
-        <nav class="nav">
-          <input type="checkbox" id="check" />
-          <label for="check" class="checkbtn">
-            <i class="fas fa-bars"></i>
-          </label>
-          <label class="logo"> D.Star Server </label>
-          <ul>
-            <li><a href="#" class="active"> Home </a></li>
-            <li><a href="/"> Upload </a></li>
-            <li><a href="/pool"> Download </a></li>
-            <li><a href="/getclipboard"> Copy </a></li>
-            <li><a href="/pastclipboard"> Paste </a></li>
-            <li><a target="_blank" href="https://github.com/Ddhruv-IOT/Smart-Share"> About </a></li>
-          </ul>
-        </nav>
-    </header>
+        <header>
+            <nav class="nav">
+            <input type="checkbox" id="check" />
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo"> D.Star Server </label>
+            <ul>
+                <li><a href="#" class="active"> Home </a></li>
+                <li><a href="/"> Upload </a></li>
+                <li><a href="/pool"> Download </a></li>
+                <li><a href="/getclipboard"> Copy </a></li>
+                <li><a href="/pastclipboard"> Paste </a></li>
+                <li><a target="_blank" href="https://github.com/Ddhruv-IOT/Smart-Share"> About </a></li>
+            </ul>
+            </nav>
+        </header>
 
-    <!-- <form>
-        <input type="file" name="f" id="fileInput"  multiple>
-        <button type="button" id="uploadButton"> Upload </button>
-    </form> -->
+        <!-- <form>
+            <input type="file" name="f" id="fileInput"  multiple>
+            <button type="button" id="uploadButton"> Upload </button>
+        </form> -->
 
-    <div class="cover">
-    <div class="rmain">
-        <div class="rholder">
-            <div class="rimg">
-                <img src="http://server.node/dw.png"/>
+        <div class="cover">
+            <div class="rmain">
+                <div class="rholder">
+                    <div class="rimg">
+                        <img src="http://server.node/dw.png"/>
+                    </div>
+
+                    <form>
+                        <label for="fileInput" class="label">
+                            <input type="file" name="f" id="fileInput"  multiple>
+                                <div class="rtxt">
+                                <p> Drag your files here<br/> OR</p>
+                            </div>
+                            <div class="rbtn-browse"> <p> Browse </p> </div>
+                        </label>
+                        <div class="rbtn-submit"> Submit </div>
+                    </form>
+                </div>
+                <div class="rloder"></div>
             </div>
-            <div class="rtxt">
-                <p> Drag your files here<br/> OR</p>
-                <!-- <p>  </p> -->
-            </div>
-            <div class="rbtn-browse"> <p> Browse </p> </div>
-            <div class="rbtn-submit"> Submnit</div>
         </div>
-        <div class="rloder"></div>
-    </div>
-</div>
     </div>
 
     <script>
@@ -88,5 +93,18 @@
             });
         }
     </script>
+
+<div class="form-group file-area">
+    <!-- <label for="images"></span></label> -->
+<input type="file" name="images" id="images" required="required" multiple="multiple"/>
+<div class="file-dummy">
+  <div class="success">Great, your files are selected. Keep on.</div>
+  <div class="default">Please select some files</div>
+</div>
+</div>
+
+
 </body>
+<!-- <link rel="stylesheet/less" type="text/css" href="styles.less" />
+<script src="https://cdn.jsdelivr.net/npm/less" ></script> -->
 </html>
