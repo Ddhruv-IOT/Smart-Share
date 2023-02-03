@@ -55,8 +55,6 @@
     /* height: 90%; */
 }
 
-
-
  .label > .rtxt {
     font-size: 17px;
     line-height: 25px;
@@ -142,66 +140,21 @@ form > .rbtn-submit {
         border: 1.6px dashed gray;
         border-radius: 30px;
     }
-
-    /* .rholder > .rimg {
-        display: none;
-    } */
 }
 
-/* form {
-    background-color: #3b6bd4;
-} */
-
-input[type=file]{
-    /* display: none; */
+.fxx{
+    opacity: 0;
+    /* background-color: black; */
     width: 100%;
     height: 100%;
 }
-
-
-@import "compass/css3";
-
 
 .file-area {
     width: 100%;
     position: relative;
 }
+
 .file-area input[type=file] {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
     cursor: pointer;
-}
-.file-area .file-dummy {
-    width: 100%;
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    text-align: center;
-    transition: background 0.3s ease-in-out;
-}
-.file-area .file-dummy .success {
-    display: none;
-}
-.file-area:hover .file-dummy {
-    background: rgba(255, 255, 255, 0.1);
-}
-.file-area input[type=file]:focus + .file-dummy {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
-    outline: -webkit-focus-ring-color auto 5px;
-}
-.file-area input[type=file]:valid + .file-dummy {
-    border-color: rgba(0, 255, 0, 0.4);
-    background-color: rgba(0, 255, 0, 0.3);
-}
-.file-area input[type=file]:valid + .file-dummy .success {
-    display: inline-block;
-}
-.file-area input[type=file]:valid + .file-dummy .default {
-    display: none;
 }
