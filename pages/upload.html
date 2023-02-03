@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="../public/code/styles/index.css"/>
+    <link rel="stylesheet" href="../public/code/styles/download.css"/>
     <link rel="stylesheet" href="../public/code/styles/upload.css"/>
     <link rel="stylesheet" href="/code/styles/download.css"/>
     <link rel="stylesheet" href="/code/styles/upload.css"/>
@@ -33,11 +33,6 @@
             </nav>
         </header>
 
-        <!-- <form>
-            <input type="file" name="f" id="fileInput"  multiple>
-            <button type="button" id="uploadButton"> Upload </button>
-        </form> -->
-
         <div class="cover">
             <div class="rmain">
                 <div class="rholder">
@@ -46,17 +41,22 @@
                     </div>
 
                     <form>
-                        <label for="fileInput" class="label">
-                            <input type="file" name="f" id="fileInput"  multiple>
+                        <div class="file-area">
+                            <label for="fileInput" class="label">
+                                <input type="file" name="f" id="fileInput" class="fxx" multiple>
                                 <div class="rtxt">
-                                <p> Drag your files here<br/> OR</p>
-                            </div>
-                            <div class="rbtn-browse"> <p> Browse </p> </div>
-                        </label>
-                        <div class="rbtn-submit"> Submit </div>
+                                    <p> Drag your files here<br/> OR</p>
+                                </div>
+                                <div class="rbtn-browse"> 
+                                    <p> Browse </p> 
+                                </div>
+                            </label>
+                        </div>
+                        <div class="rbtn-submit" id="uploadButton"> Submit </div>
                     </form>
+                    <p>file Name</p>
                 </div>
-                <div class="rloder"></div>
+                <div class="rloder" id="rloder"></div>
             </div>
         </div>
     </div>
@@ -66,6 +66,8 @@
             
             var fileInput = document.querySelector('#fileInput');
             var uploadButton = document.querySelector('#uploadButton');
+            var meter = document.getElementById('rloder')
+            meter.style.display = "none"
 
             uploadButton.addEventListener('click', function() {
                 var formData = new FormData();
@@ -80,6 +82,9 @@
 
                 xhr.upload.onprogress = function(event) {
                     // Handle progress events
+                    meter.style.display = "block"
+                    var len = (event.loaded /event.total) * 100
+                    meter.style.width = len + "%";
                     console.log((event.loaded /event.total)*100)
                 };
 
@@ -93,18 +98,5 @@
             });
         }
     </script>
-
-<div class="form-group file-area">
-    <!-- <label for="images"></span></label> -->
-<input type="file" name="images" id="images" required="required" multiple="multiple"/>
-<div class="file-dummy">
-  <div class="success">Great, your files are selected. Keep on.</div>
-  <div class="default">Please select some files</div>
-</div>
-</div>
-
-
 </body>
-<!-- <link rel="stylesheet/less" type="text/css" href="styles.less" />
-<script src="https://cdn.jsdelivr.net/npm/less" ></script> -->
 </html>
