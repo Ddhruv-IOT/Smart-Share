@@ -68,6 +68,7 @@
     top: 0;
     background-color: black;
     font-family: montserrat;
+    z-index: 10;
   }
 
   label.logo {
