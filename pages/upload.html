@@ -37,7 +37,7 @@
             <div class="rmain">
                 <div class="rholder">
                     <div class="rimg">
-                        <img src="http://server.node/code/assets/dw.png"/>
+                        <img src="http://localhost/code/assets/dw.png"/>
                     </div>
 
                     <form>
@@ -83,14 +83,14 @@
                 xhr.upload.onprogress = function(event) {
                     // Handle progress events
                     meter.style.display = "block"
-                    var len = (event.loaded /event.total) * 100
+                    var len = (event.loaded /event.total) * 90
                     meter.style.width = len + "%";
                     console.log((event.loaded /event.total)*100)
                 };
 
-                xhr.onload = function() {
+                xhr.onload = function(event) {
                     // Handle success or failure
-                    console.log(event.returnValue)
+                    console.log(xhr.status)
                     document.getElementById("fileInput").value = "";
                 };
 
