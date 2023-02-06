@@ -54,7 +54,7 @@
                         </div>
                         <div class="rbtn-submit" id="uploadButton"> Submit </div>
                     </form>
-                    <p>file Name</p>
+                    <p id="fn">file Name</p>
                 </div>
                 <div class="rloder" id="rloder"></div>
             </div>
@@ -90,8 +90,12 @@
 
                 xhr.onload = function(event) {
                     // Handle success or failure
+                    if(xhr.status == 200) {
+                        // success
+                        document.getElementById("fn").innerText = "Success";
+                    }
                     console.log(xhr.status)
-                    document.getElementById("fileInput").value = "";
+                    // document.getElementById("fileInput").value = "";
                 };
 
                 xhr.send(formData);
