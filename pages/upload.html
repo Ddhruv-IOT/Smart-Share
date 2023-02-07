@@ -82,7 +82,6 @@
                 var files = fileInput.files;
 
                 if (files.length != 0) {
-                
                     for (var i = 0; i < files.length; i++) {
                         formData.append("f", files[i]);
                     }
@@ -99,26 +98,23 @@
                     };
 
                     xhr.onload = function(event) {
-                        // Handle success or failure
                         if(xhr.status == 200) {
-                            // success
-                            document.getElementById("fileName").innerText = "Success";
+                            // success Block
+                            fileName.innerText = "Upload Successful!";
+                            fileInput.value = '';
                         }
-
                         else {
+                            fileName.innerText = "";
+                            meter.style.display = "none"
                             alert("Failed")
                         }
                         console.log(xhr.status)
-                        // document.getElementById("fileInput").value = "";
                     };
-
                     xhr.send(formData);
-            }
-            else{
+                } else {
                 alert("No files")
-            }
+                }
             });
-        
         }
     </script>
 </body>
