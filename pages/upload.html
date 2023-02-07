@@ -112,7 +112,9 @@
                     };
                     xhr.send(formData);
                 } else {
-                alert("No files")
+                    alert("No files")
+                    meter.style.display = "none";
+                    fileName.innerText = "";
                 }
             });
         }
