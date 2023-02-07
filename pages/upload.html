@@ -41,9 +41,9 @@
                     </div>
 
                     <form>
-                        <div class="file-area">
+                        <div class="file-area" id="file-area">
                             <label for="fileInput" class="label">
-                                <input type="file" name="f" id="fileInput" class="fxx" multiple>
+                                <input type="file" name="f" id="fileInput" class="fxx" multiple required>
                                 <div class="rtxt">
                                     <p> Drag your files here<br/> OR</p>
                                 </div>
@@ -54,7 +54,7 @@
                         </div>
                         <div class="rbtn-submit" id="uploadButton"> Submit </div>
                     </form>
-                    <p id="fn">file Name</p>
+                    <p id="fileName">file Name</p>
                 </div>
                 <div class="rloder" id="rloder"></div>
             </div>
@@ -64,14 +64,28 @@
     <script>
         window.onload = ()=> {
             
+            var fileArea = document.querySelector("#file-area");
             var fileInput = document.querySelector('#fileInput');
             var uploadButton = document.querySelector('#uploadButton');
-            var meter = document.getElementById('rloder')
-            meter.style.display = "none"
+            var meter = document.getElementById('rloder');
+            var fileName = document.getElementById('fileName');
+            meter.style.display = "none";
+            fileName.innerText = "";
+
+            fileArea.addEventListener('change', function(){
+                 meter.style.display = "none"
+                 x = document.getElementById("fileInput")
+                 fileName.innerText = x.files[0]['name']
+                //  var files = fileInput.files;
+                //  fileName.innerText = files;
+
+            })
 
             uploadButton.addEventListener('click', function() {
                 var formData = new FormData();
                 var files = fileInput.files;
+
+                if (files.length != 0){
                 
                 for (var i = 0; i < files.length; i++) {
                     formData.append("f", files[i]);
@@ -92,14 +106,19 @@
                     // Handle success or failure
                     if(xhr.status == 200) {
                         // success
-                        document.getElementById("fn").innerText = "Success";
+                        document.getElementById("fileName").innerText = "Success";
                     }
                     console.log(xhr.status)
                     // document.getElementById("fileInput").value = "";
                 };
 
                 xhr.send(formData);
+            }
+            else{
+                alert("No files")
+            }
             });
+        
         }
     </script>
 </body>
