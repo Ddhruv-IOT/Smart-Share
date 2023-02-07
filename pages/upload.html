@@ -63,7 +63,7 @@
 
     <script>
         window.onload = ()=> {
-            
+
             var fileArea = document.querySelector("#file-area");
             var fileInput = document.querySelector('#fileInput');
             var uploadButton = document.querySelector('#uploadButton');
@@ -72,47 +72,47 @@
             meter.style.display = "none";
             fileName.innerText = "";
 
-            fileArea.addEventListener('change', function(){
+            fileArea.addEventListener('change', function() {
                  meter.style.display = "none"
-                 x = document.getElementById("fileInput")
-                 fileName.innerText = x.files[0]['name']
-                //  var files = fileInput.files;
-                //  fileName.innerText = files;
-
+                 fileName.innerText = fileInput.files[0]['name']
             })
 
             uploadButton.addEventListener('click', function() {
                 var formData = new FormData();
                 var files = fileInput.files;
 
-                if (files.length != 0){
+                if (files.length != 0) {
                 
-                for (var i = 0; i < files.length; i++) {
-                    formData.append("f", files[i]);
-                }
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/upload', true);
-
-                xhr.upload.onprogress = function(event) {
-                    // Handle progress events
-                    meter.style.display = "block"
-                    var len = (event.loaded /event.total) * 90
-                    meter.style.width = len + "%";
-                    console.log((event.loaded /event.total)*100)
-                };
-
-                xhr.onload = function(event) {
-                    // Handle success or failure
-                    if(xhr.status == 200) {
-                        // success
-                        document.getElementById("fileName").innerText = "Success";
+                    for (var i = 0; i < files.length; i++) {
+                        formData.append("f", files[i]);
                     }
-                    console.log(xhr.status)
-                    // document.getElementById("fileInput").value = "";
-                };
 
-                xhr.send(formData);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '/upload', true);
+
+                    xhr.upload.onprogress = function(event) {
+                        // Handle progress events
+                        meter.style.display = "block"
+                        var len = (event.loaded /event.total) * 90
+                        meter.style.width = len + "%";
+                        console.log((event.loaded /event.total) * 100)
+                    };
+
+                    xhr.onload = function(event) {
+                        // Handle success or failure
+                        if(xhr.status == 200) {
+                            // success
+                            document.getElementById("fileName").innerText = "Success";
+                        }
+
+                        else {
+                            alert("Failed")
+                        }
+                        console.log(xhr.status)
+                        // document.getElementById("fileInput").value = "";
+                    };
+
+                    xhr.send(formData);
             }
             else{
                 alert("No files")
