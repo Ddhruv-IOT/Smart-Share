@@ -74,7 +74,8 @@
 
             fileArea.addEventListener('change', function() {
                  meter.style.display = "none"
-                 fileName.innerText = fileInput.files[0]['name']
+                 var len = fileInput.files.length 
+                 fileName.innerText = (len <= 1  ? `Selected: ${fileInput.files[0]['name']}` : `Selected: ${len} files`) 
             })
 
             uploadButton.addEventListener('click', function() {
