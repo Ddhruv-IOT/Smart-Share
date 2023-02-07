@@ -158,3 +158,15 @@ form > .rbtn-submit {
     position: absolute;
     cursor: pointer;
 }
+
+/* #fileName {
+    display: inline;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-width: 60%;
+    width: 40%;
+    min-width: 15%;
+    height: 30px;
+  } */
