@@ -44,6 +44,7 @@
 
 .rholder > .rimg {
     height: auto;
+    transition: 2s;
 }
 
 .rholder > form, .label {
@@ -55,7 +56,7 @@
     /* height: 90%; */
 }
 
- .label > .rtxt {
+.label > .rtxt {
     font-size: 17px;
     line-height: 25px;
     text-align: center;
@@ -63,7 +64,7 @@
     text-shadow: 0.2px 0.3px black;
 }
 
- .label > .rbtn-browse{
+.label > .rbtn-browse{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,6 +93,7 @@ form > .rbtn-submit {
     border-radius: 11px ;
     padding: 20px;
     box-shadow: inset 1px 1px rgba(4, 4, 104, 0.479), 1px 1px rgba(201, 17, 17, 0.37);
+    cursor: pointer;
 }
 
 .rmain > .rloder {
@@ -108,10 +110,10 @@ form > .rbtn-submit {
 @media screen and (max-width: 950px) {
     
     body {
-      background-color: lightgreen;
-      background-color: rgb(234, 236, 236);
-
+        background-color: lightgreen;
+        background-color: rgb(234, 236, 236);
     }
+
     .rmain {
         display: flex;
         flex-direction: column;
@@ -144,7 +146,6 @@ form > .rbtn-submit {
 
 .fxx{
     opacity: 0;
-    /* background-color: black; */
     width: 100%;
     height: 100%;
 }
@@ -161,4 +162,14 @@ form > .rbtn-submit {
 
 #fileName {
     overflow: hidden;
-  }
+}
+
+.rbtn-browse, .rbtn-submit {
+    transition: transform 0.2s ease-in-out;
+}
+
+.rbtn-submit:active, .file-area:active .rbtn-browse{
+    transition: 0s;
+    box-shadow: 0px 1.7px white;
+    transform: translateY(2px);
+}
