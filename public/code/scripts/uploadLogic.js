@@ -1,6 +1,6 @@
 window.onload = ()=> {
 
-    fetch('code/assets/dw.png').then(r => r.blob()).then( imageBlob => {
+    fetch('code/assets/upload.png').then(r => r.blob()).then( imageBlob => {
         const imageObjectURL = URL.createObjectURL(imageBlob);
         console.log(imageObjectURL);
         document.getElementById("img").src = imageObjectURL;
@@ -37,6 +37,8 @@ window.onload = ()=> {
                 meter.style.display = "block"
                 var len = (event.loaded /event.total) * 90
                 meter.style.width = len + "%";
+                deg = (event.loaded /event.total) * 360
+                document.getElementById("img").style.transform = "rotate("+deg+"deg)";
                 console.log((event.loaded /event.total) * 100)
             };
 
