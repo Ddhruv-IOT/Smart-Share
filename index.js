@@ -2,20 +2,42 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 const spawn = require("child_process").spawn;
 const app = express();
+
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
+
 /* ------------- Text Sharing Engine ------------- */
+
+// Web Page to connect over Socket Engine
+app.get('/set', (req, res) => {
+  res.sendFile(`${__dirname}/index.html`);
+});
+
+// Socket Update Engine
+io.on('connection', (socket) => {
+  console.log('User connected');
+  // Send updates to the client
+  setInterval(() => {
+    const pyProg = spawn('python',["./python-plugins/scr.py"]);
+    pyProg.stdout.on('data', function(data) {  
+      socket.emit('update', { message: data.toString() });
+    });
+  }, 1000);
+});
 
 // see the copied text on server device
 app.get('/getclipboard', (req, res) => {
   const pyProg = spawn('python',["./python-plugins/scr.py"]);
   pyProg.stdout.on('data', function(data) {  
     res.write(data);
-    res.end('end');
+    res.end();
   });
 })
 
@@ -115,8 +137,8 @@ app.get('/', function(req, res) {
 
 // Start the server
 const port = 80;
-let ip = "o"
-app.listen(port, () => {
+
+server.listen(port, () => {
   const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
   getIp.stdout.on('data', (ip) => {  
     console.log(ip.toString())
