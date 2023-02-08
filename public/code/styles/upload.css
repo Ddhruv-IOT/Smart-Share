@@ -173,3 +173,18 @@ form > .rbtn-submit {
     box-shadow: 0px 1.7px white;
     transform: translateY(2px);
 }
+
+.rbtn-submit:hover, .file-area:hover .rbtn-browse {
+    animation: box infinite 2s alternate;
+}
+
+@keyframes box {
+    0% {
+        box-shadow: 1.7px 1.7px red, inset 1.7px 1.7px white;
+    }
+
+    100% {
+        box-shadow: 1.7px 1.7px lime, inset 1.7px 1.7px black;            
+    }
+}
+
