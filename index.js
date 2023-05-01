@@ -4,6 +4,9 @@ const path = require('path');
 const fs = require('fs');
 const http = require('http');
 const spawn = require("child_process").spawn;
+const getServerCp = require("./controllers/textEngine/getServerClipoboard")
+const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
+
 const app = express();
 
 const server = http.createServer(app);
@@ -13,7 +16,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
 
-/* ------------- Text Sharing Engine ------------- */
 
 // Web Page to connect over Socket Engine
 app.get('/set', (req, res) => {
@@ -32,31 +34,16 @@ io.on('connection', (socket) => {
   }, 1000);
 });
 
-// see the copied text on server device
-app.get('/getclipboard', (req, res) => {
-  const pyProg = spawn('python',["./python-plugins/scr.py"]);
-  pyProg.stdout.on('data', function(data) {  
-    res.write(data);
-    res.end();
-  });
-})
+/* ------------- Text Sharing Engine ------------- */
 
 // copy text on server device from other device
 app.get("/pastclipboard", (req, res) => {
   res.sendFile('test.html', {root: __dirname + "/pages/" })
 });
 
-// process the data from pastclipboard or direct request for copying text
-app.get('/copydataapi', (req, res) => {
-  text = req.query.x;
-  console.log(text)
-  const pyProg = spawn('python', ["./python-plugins/ppr.py", text]);
-  pyProg.stdout.on('data', function(data) {  
-    res.write(data);
-    res.end('end');
-  });
-  res.status(204).send();
-})
+// see the copied text on server device
+app.get('/getclipboard', getServerCp)
+app.get('/copydataapi', writeServerCp)
 
 // route for clipboard write over post request, flutter connect side
 app.post('/', function(req, res) {
