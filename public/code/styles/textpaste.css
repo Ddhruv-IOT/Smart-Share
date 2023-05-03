@@ -168,13 +168,13 @@ form > .rbtn-submit {
     transition: transform 0.2s ease-in-out;
 }
 
-.rbtn-submit:active, .file-area:active .rbtn-browse{
+/* .rbtn-submit:active, .file-area:active .rbtn-browse{
     transition: 0s;
     box-shadow: 0px 1.7px white;
     transform: translateY(2px);
-}
+} */
 
-.rbtn-submit:hover, .file-area:hover .rbtn-browse {
+/* .rbtn-submit:hover, .file-area:hover .rbtn-browse {
     animation: box infinite 2s alternate;
 }
 
@@ -186,11 +186,12 @@ form > .rbtn-submit {
     100% {
         box-shadow: 1.7px 1.7px lime, inset 1.7px 1.7px black;            
     }
-}
+} */
 
 .f {
     width: 80% !important;
     border-radius: 20px;
+    padding: 20px;
     
 }
 
