@@ -18,11 +18,12 @@ app.use(express.static(__dirname+'/public/'));
 
 
 // Web Page to connect over Socket Engine
-app.get('/set', (req, res) => {
-  res.sendFile(`${__dirname}/index.html`);
+app.get('/sockets', (req, res) => {
+  res.sendFile('socketsText.html', {root: __dirname + "/pages/" })
+
 });
 
-// Socket Update Engine
+// Socket Update Enginefor Text
 io.on('connection', (socket) => {
   console.log('User connected');
   // Send updates to the client
@@ -122,14 +123,35 @@ app.get('/', function(req, res) {
   res.sendFile('upload.html', {root: __dirname +"/pages/" })
 });
 
+// Stream video Str in Progress
+
+app.get('/uploads/:fileName', (req, res) => {
+  const fileName = req.params.fileName;
+  const filePath = `./public/uploads/${fileName}`;
+  const stat = fs.statSync(filePath);
+
+//   res.setHeader('Content-Type', 'video/mp4');
+  res.setHeader('Content-Length', stat.size);
+  res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
+
+  const readStream = fs.createReadStream(filePath);
+  readStream.pipe(res);
+});
+
 // Start the server
 const port = 80;
+
+// Send file for sockets page
+app.get('/stream', function(req, res) {
+  res.sendFile('streamFile.html', {root: __dirname + "/pages/" })
+});
 
 server.listen(port, () => {
   const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
   getIp.stdout.on('data', (ip) => {  
     console.log(ip.toString())
     console.log(`Server started on port ${port} ${ip}`);
+    console.log(`Serving at: http://${ip}:${port}`)
   })
 });
 
@@ -148,5 +170,8 @@ TODO:
   File based
   See all the uploaded files:         http://192.168.1.5:8000/pool
   Upload a file:                      http://192.168.1.5:8000/
+
+  http://192.168.1.22/stream
+  http://192.168.1.22/sockets
   
 */
