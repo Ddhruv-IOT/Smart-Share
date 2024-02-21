@@ -6,6 +6,7 @@ const http = require('http');
 const spawn = require("child_process").spawn;
 const getServerCp = require("./controllers/textEngine/getServerClipoboard")
 const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
+const cors = require('cors');
 
 const app = express();
 
@@ -15,6 +16,7 @@ const io = require('socket.io')(server);
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
+app.use(cors())
 
 
 // Web Page to connect over Socket Engine
