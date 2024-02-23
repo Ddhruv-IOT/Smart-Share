@@ -1,3 +1,62 @@
-<video controls src="http://localhost/uploads/str.mp4"></video>
-<!-- <img controls src="http://localhost:3000/uploads/a.png"></video> -->
-<a href="http://localhost/uploads/str.mp4">swsw</a>
+<a></a>
+
+<script>
+    // fetch file list
+    fetch('http://localhost/files')
+        .then((response) => response.json())
+        .then((data) => {
+            data.forEach((item) => {
+                // Create a link for each file
+                const a = document.createElement('a');
+                const b = document.createElement('br');
+
+                // Set the href attribute of the link to the file location
+                a.href = `http://localhost/uploads/${item}`;
+                a.textContent = item;
+
+                // Create preview elements based on file type
+                const fileExtension = item.split('.').pop().toLowerCase();
+                let previewElement;
+
+                if (['mp4', 'avi', 'mkv'].includes(fileExtension)) {
+                    // Video file
+                    previewElement = document.createElement('video');
+                    // set width and height
+                    previewElement.width = 320;
+                    previewElement.height = 240;
+                    previewElement.src = `http://localhost/uploads/${item}`;
+                    previewElement.controls = true;
+                } else if (['txt'].includes(fileExtension)) {
+                    // Text file
+                    previewElement = document.createElement('iframe');
+                    previewElement.src = `http://localhost/uploads/${item}`;
+                    previewElement.width = 320;
+                    previewElement.height = 240;
+                } else if (['jpg', 'jpeg', 'png', 'gif'].includes(fileExtension)) {
+                    // Image file
+                    previewElement = document.createElement('img');
+                    previewElement.src = `http://localhost/uploads/${item}`;
+                    previewElement.alt = item;
+                    previewElement.style.maxWidth = '100%'; // Adjust according to your layout
+                    previewElement.width = 320;
+                    previewElement.height = 240;
+                } else if (['mp3', 'wav', 'ogg'].includes(fileExtension)) {
+                    // Audio file
+                    previewElement = document.createElement('audio');
+                    previewElement.src = `http://localhost/uploads/${item}`;
+                    previewElement.controls = true;
+                } else {
+                    // Unsupported file type
+                    previewElement = document.createElement('p');
+                    previewElement.textContent = `Preview not available for ${item}`;
+                }
+
+                // Append the preview element and line break to the body
+                document.body.appendChild(a);
+                document.body.appendChild(b);
+                if (previewElement) {
+                    document.body.appendChild(previewElement);
+                }
+            });
+        });
+</script>
