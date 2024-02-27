@@ -7,6 +7,7 @@ const spawn = require("child_process").spawn;
 const getServerCp = require("./controllers/textEngine/getServerClipoboard")
 const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
 const cors = require('cors');
+const fileUplaod = require('./controllers/fileEngine/upload');
 
 const app = express();
 
@@ -57,37 +58,40 @@ app.post('/', function(req, res) {
 
 /* ------------- File Sharing Engine ------------- */
 
-// Set up the storage engine
-const storage = multer.diskStorage({
-  destination: './public/uploads/',
-  filename: function(req, file, cb) {
-    cb(null, path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + path.extname(file.originalname));
-  }
-});
+// // Set up the storage engine
+// const storage = multer.diskStorage({
+//   destination: './public/uploads/',
+//   filename: function(req, file, cb) {
+//     cb(null, path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + path.extname(file.originalname));
+//   }
+// });
 
-// Initialize the upload middleware
-const upload = multer({
-  storage: storage,
-  limits: {fileSize: 10000000000}, // limit the file size
-}).array('f', 15);
+// // Initialize the upload middleware
+// const upload = multer({
+//   storage: storage,
+//   limits: {fileSize: 10000000000}, // limit the file size
+// }).array('f', 15);
 
-// Set up the public directory for serving uploaded files
-app.use(express.static('./public'));
+// // Set up the public directory for serving uploaded files
+// app.use(express.static('./public'));
 
-// Set up the file upload route
-app.post('/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.send(err);
-    } else {
-      if (req.file === undefined) {
-        res.send('Error: No File Selected!');
-      } else {
-        res.send('File uploaded!');
-      }
-    }
-  });
-});
+// // Set up the file upload route
+// app.post('/upload', (req, res) => {
+//   upload(req, res, (err) => {
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       if (req.file === undefined) {
+//         res.send('Error: No File Selected!');
+//       } else {
+//         res.send('File uploaded!');
+//       }
+//     }
+//   });
+// });
+
+app.post('/upload', fileUplaod) 
+
 
 // Set up the file download route
 app.get('/download/:filename', (req, res) => {
