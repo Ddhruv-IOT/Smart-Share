@@ -9,6 +9,9 @@ const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
 const cors = require('cors');
 const fileUplaod = require('./controllers/fileEngine/upload');
 
+const qrcode = require('qrcode-terminal');
+
+
 const app = express();
 
 const server = http.createServer(app);
@@ -158,6 +161,9 @@ server.listen(port, () => {
     console.log(ip.toString())
     console.log(`Server started on port ${port} ${ip}`);
     console.log(`Serving at: http://${ip}:${port}`)
+    qrcode.generate(`http://${ip}:${port}`, { small: true }, (qrCode) => {
+      console.log(qrCode);
+    });
   })
 });
 
