@@ -1,7 +1,5 @@
 public/uploads/
-node_modules/side-channel
-public/uploads/
-./node_modules/*
+node_modules/
+package-lock.json
 Smart-Share.code-workspace
-./.gitignore
 
