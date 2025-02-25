@@ -1,6 +1,7 @@
 public/uploads/
-node_modules/*
 node_modules/side-channel
-node_modules
 public/uploads/
+./node_modules/*
 Smart-Share.code-workspace
+./.gitignore
+
