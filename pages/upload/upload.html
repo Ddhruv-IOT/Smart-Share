@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="/code/styles/download.css"/>
+    <link rel="stylesheet" href="upload.css"/>
+    <script src="uploadLogic.js"></script>
+    <title>Upload Page</title>
+</head>
+
+<body>
+    <div class="mtio">
+        <header>
+            <nav class="nav">
+            <input type="checkbox" id="check" />
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+            <label class="logo"> D.Star Server </label>
+            <ul>
+                <li><a href="#" class="active"> Home </a></li>
+                <li><a href="/"> Upload </a></li>
+                <li><a href="/pool"> Download </a></li>
+                <li><a href="/getclipboard"> Copy </a></li>
+                <li><a href="/pastclipboard"> Paste </a></li>
+                <li><a href="/sockets"> Live Copy </a></li>
+                <li><a target="_blank" href="https://github.com/Ddhruv-IOT/Smart-Share"> About </a></li>
+            </ul>
+            </nav>
+        </header>
+
+        <div class="cover">
+            <div class="rmain">
+                <div class="rholder">
+                    <div class="rimg">
+                        <img id="img" src="#"/>
+                    </div>
+                    <form>
+                        <div class="file-area" id="file-area">
+                            <label for="fileInput" class="label">
+                                <input type="file" name="f" id="fileInput" class="fxx" multiple required>
+                                <div class="rtxt">
+                                    <p> Drag your files here<br/> OR</p>
+                                </div>
+                                <div class="rbtn-browse"> 
+                                    <p> Browse </p> 
+                                </div>
+                            </label>
+                        </div>
+                        <div class="rbtn-submit" id="uploadButton"> Submit </div>
+                    </form>
+                    <p id="fileName">file Name</p>
+                </div>
+                <div class="rloder" id="rloder"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
