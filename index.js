@@ -24,14 +24,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
 app.use(express.static(path.join(__dirname, 'pages', 'upload')));
+app.use(express.static(path.join(__dirname, 'pages', 'download')));
+
 app.use(cors())
-
-
-// Web Page to connect over Socket Engine
-app.get('/sockets', (req, res) => {
-  res.sendFile('socketsText.html', {root: __dirname + "/pages/" })
-
-});
 
 // Socket Update Enginefor Text
 io.on('connection', (socket) => {
@@ -99,7 +94,7 @@ app.get('/files', (req, res) => {
 
 // Set up the file download route for client
 app.get('/pool', function(req, res) {
-    res.sendFile('download.html', {root: __dirname + "/pages/" })
+    res.sendFile(path.join(__dirname, 'pages', 'download', 'download.html'));
 });
 
 app.get('/', (req, res) => {
@@ -121,9 +116,6 @@ app.get('/uploads/:fileName', (req, res) => {
   readStream.pipe(res);
 });
 
-// Start the server
-// const port = 80;
-
 // Send file for sockets page
 app.get('/stream', function(req, res) {
   res.sendFile('streamFile.html', {root: __dirname + "/pages/" })
@@ -140,24 +132,3 @@ server.listen(PORT, () => {
     });
   })
 });
-
-/*
-res.redirect('/pastclipboard');
-res.status(204).send();
-TODO: 
-
-  Accessble Routes
-  
-  Text based
-  Read server clipboard:              http://192.168.1.5:8000/getclipboard
-  Write to clipboard using form:      http://192.168.1.5:8000/pastclipboard
-  Write to clipboard using api call:  http://192.168.1.5:8000/copydataapi?x={data}
-  
-  File based
-  See all the uploaded files:         http://192.168.1.5:8000/pool
-  Upload a file:                      http://192.168.1.5:8000/
-
-  http://192.168.1.22/stream
-  http://192.168.1.22/sockets
-  
-*/
