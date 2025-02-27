@@ -23,6 +23,7 @@ const io = require('socket.io')(server);
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
+app.use(express.static(path.join(__dirname, 'pages', 'upload')));
 app.use(cors())
 
 
@@ -48,7 +49,11 @@ io.on('connection', (socket) => {
 
 // copy text on server device from other device
 app.get("/pastclipboard", (req, res) => {
-  res.sendFile('test.html', {root: __dirname + "/pages/" })
+  res.sendFile('pasteClipBoard.html', {root: __dirname + "/pages/" })
+});
+
+app.get("/getClipboarddata", (req, res) => {
+  res.sendFile('copyClipBoard.html', {root: __dirname + "/pages/" })
 });
 
 // see the copied text on server device
@@ -62,39 +67,6 @@ app.post('/', function(req, res) {
   res.status(201);
 });
 
-/* ------------- File Sharing Engine ------------- */
-
-// // Set up the storage engine
-// const storage = multer.diskStorage({
-//   destination: './public/uploads/',
-//   filename: function(req, file, cb) {
-//     cb(null, path.basename(file.originalname, path.extname(file.originalname)) + "-" + Date.now() + path.extname(file.originalname));
-//   }
-// });
-
-// // Initialize the upload middleware
-// const upload = multer({
-//   storage: storage,
-//   limits: {fileSize: 10000000000}, // limit the file size
-// }).array('f', 15);
-
-// // Set up the public directory for serving uploaded files
-// app.use(express.static('./public'));
-
-// // Set up the file upload route
-// app.post('/upload', (req, res) => {
-//   upload(req, res, (err) => {
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       if (req.file === undefined) {
-//         res.send('Error: No File Selected!');
-//       } else {
-//         res.send('File uploaded!');
-//       }
-//     }
-//   });
-// });
 
 app.post('/upload', fileUplaod) 
 
@@ -130,9 +102,8 @@ app.get('/pool', function(req, res) {
     res.sendFile('download.html', {root: __dirname + "/pages/" })
 });
 
-// Set up the file upload route for client
-app.get('/', function(req, res) {
-  res.sendFile('upload.html', {root: __dirname +"/pages/" })
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages', 'upload', 'upload.html'));
 });
 
 // Stream video Str in Progress
