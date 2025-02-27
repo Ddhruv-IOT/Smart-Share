@@ -1,4 +1,5 @@
 const express = require('express');
+const env = require('dotenv')
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -10,7 +11,9 @@ const cors = require('cors');
 const fileUplaod = require('./controllers/fileEngine/upload');
 
 const qrcode = require('qrcode-terminal');
+const e = require('express');
 
+PORT = env.config().parsed.PORT
 
 const app = express();
 
@@ -148,20 +151,20 @@ app.get('/uploads/:fileName', (req, res) => {
 });
 
 // Start the server
-const port = 80;
+// const port = 80;
 
 // Send file for sockets page
 app.get('/stream', function(req, res) {
   res.sendFile('streamFile.html', {root: __dirname + "/pages/" })
 });
 
-server.listen(port, () => {
+server.listen(PORT, () => {
   const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
   getIp.stdout.on('data', (ip) => {  
     console.log(ip.toString())
-    console.log(`Server started on port ${port} ${ip}`);
-    console.log(`Serving at: http://${ip}:${port}`)
-    qrcode.generate(`http://${ip}:${port}`, { small: true }, (qrCode) => {
+    console.log(`Server started on PORT ${PORT} ${ip}`);
+    console.log(`Serving at: http://${ip}:${PORT}`)
+    qrcode.generate(`http://${ip}:${PORT}`, { small: true }, (qrCode) => {
       console.log(qrCode);
     });
   })
