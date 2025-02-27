@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Watcher</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .clipboard-text {
+            width: 100%;
+            min-height: 50px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #f9f9f9;
+            word-wrap: break-word;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .toggle-container {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toggle {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Clipboard Watcher</h2>
+        <div class="clipboard-text" id="clipboardText">No text copied yet.</div>
+
+        <div class="buttons">
+            <button onclick="copyToClipboard()">Copy to Clipboard</button>
+            <button onclick="fetchClipboard()" id="refreshBtn">Refresh</button>
+        </div>
+
+        <div class="toggle-container">
+            <label>Live Update:</label>
+            <input type="checkbox" id="liveUpdateToggle" class="toggle" onchange="toggleLiveUpdate()">
+        </div>
+    </div>
+
+    <script>
+        let liveUpdate = false;
+        let socket = null;
+
+        async function fetchClipboard() {
+            try {
+                const response = await fetch('/getclipboard');
+                const data = await response.text();
+                document.getElementById("clipboardText").textContent = data || "Clipboard is empty.";
+            } catch (err) {
+                document.getElementById("clipboardText").textContent = "Failed to fetch clipboard data.";
+            }
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById("clipboardText").textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Text copied!");
+            });
+        }
+
+        function toggleLiveUpdate() {
+            liveUpdate = document.getElementById("liveUpdateToggle").checked;
+            if (liveUpdate) {
+                startLiveUpdates();
+                document.getElementById("refreshBtn").disabled = true;
+            } else {
+                stopLiveUpdates();
+                document.getElementById("refreshBtn").disabled = false;
+            }
+        }
+
+        function startLiveUpdates() {
+            const socket = io();
+            
+            socket.on('update', (data) => {
+                document.getElementById('clipboardText').textContent =data.message;
+        });
+            
+        }
+
+        function stopLiveUpdates() {
+            if (socket) {
+                socket.disconnect();
+                socket = null;
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+    <script>
+        
+    </script>
