@@ -25,6 +25,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
 app.use(express.static(path.join(__dirname, 'pages', 'upload')));
 app.use(express.static(path.join(__dirname, 'pages', 'download')));
+app.use(express.static(path.join(__dirname, 'pages', 'getServerClipboard')));
+app.use(express.static(path.join(__dirname, 'pages', 'pasteServerClipboard')));
+
+
 
 app.use(cors())
 
@@ -43,28 +47,14 @@ io.on('connection', (socket) => {
 /* ------------- Text Sharing Engine ------------- */
 
 // copy text on server device from other device
-app.get("/pastclipboard", (req, res) => {
-  res.sendFile('pasteClipBoard.html', {root: __dirname + "/pages/" })
-});
 
-app.get("/getClipboarddata", (req, res) => {
-  res.sendFile('copyClipBoard.html', {root: __dirname + "/pages/" })
-});
 
 // see the copied text on server device
 app.get('/getclipboard', getServerCp)
 app.get('/copydataapi', writeServerCp)
 
-// // route for clipboard write over post request, flutter connect side
-// app.post('/', function(req, res) {
-//   data = req.body
-//   console.log(data)
-//   res.status(201);
-// });
-
-
+// files
 app.post('/upload', fileUplaod) 
-
 
 // Set up the file download route
 app.get('/download/:filename', (req, res) => {
@@ -72,27 +62,8 @@ app.get('/download/:filename', (req, res) => {
   res.download(file);
 });
 
-// Set up a route to get the list of files
-// app.get('/files', (req, res) => {
-// // Use the fs module to read the contents of the folder
-//   fs.readdir('./public/uploads', (err, files) => {
-//     files.sort((a, b) => {
-//       directoryPath = "./public/uploads"
-//       const fileA = path.join(directoryPath, a);
-//       const fileB = path.join(directoryPath, b);
-  
-//       return fs.statSync(fileB).mtime.getTime() - fs.statSync(fileA).mtime.getTime();
-//     });
-//     if (err) {
-//       res.send(err);
-//     } else {
-//       // Return the array of file names to the client
-//       res.send(files);
-//     }
-//   });
-// });
-
 app.get('/files', listFiles)
+
 // Set up the file download route for client
 app.get('/pool', function(req, res) {
     res.sendFile(path.join(__dirname, 'pages', 'download', 'download.html'));
@@ -101,6 +72,7 @@ app.get('/pool', function(req, res) {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'upload', 'upload.html'));
 });
+
 
 // Stream video Str in Progress
 
@@ -120,6 +92,17 @@ app.get('/uploads/:fileName', (req, res) => {
 // Send file for sockets page
 app.get('/stream', function(req, res) {
   res.sendFile('streamFile.html', {root: __dirname + "/pages/" })
+});
+
+
+// Host the client pages
+
+app.get("/pastclipboard", (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages', 'pasteServerClipboard', 'pasteClipBoard.html'))
+});
+
+app.get("/getClipboarddata", (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages', 'getServerClipboard', 'copyClipBoard.html'))
 });
 
 server.listen(PORT, () => {
