@@ -27,10 +27,8 @@ app.use(express.static(path.join(__dirname, 'pages', 'upload')));
 app.use(express.static(path.join(__dirname, 'pages', 'download')));
 app.use(express.static(path.join(__dirname, 'pages', 'getServerClipboard')));
 app.use(express.static(path.join(__dirname, 'pages', 'pasteServerClipboard')));
-
-
-
 app.use(cors())
+
 
 // Socket Update Enginefor Text
 io.on('connection', (socket) => {
@@ -44,17 +42,13 @@ io.on('connection', (socket) => {
   }, 1000);
 });
 
-/* ------------- Text Sharing Engine ------------- */
 
-// copy text on server device from other device
-
-
-// see the copied text on server device
 app.get('/getclipboard', getServerCp)
-app.get('/copydataapi', writeServerCp)
+app.get('/copydataapi', writeServerCp) // # fix naming convention
 
 // files
 app.post('/upload', fileUplaod) 
+app.get('/files', listFiles)
 
 // Set up the file download route
 app.get('/download/:filename', (req, res) => {
@@ -62,48 +56,29 @@ app.get('/download/:filename', (req, res) => {
   res.download(file);
 });
 
-app.get('/files', listFiles)
+// !--------------- H o s t  t h e  c l i e n t  p a g e s -----------------! //
 
 // Set up the file download route for client
 app.get('/pool', function(req, res) {
     res.sendFile(path.join(__dirname, 'pages', 'download', 'download.html'));
 });
 
+// Set up the file upload route for client
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'upload', 'upload.html'));
 });
 
-
-// Stream video Str in Progress
-
-app.get('/uploads/:fileName', (req, res) => {
-  const fileName = req.params.fileName;
-  const filePath = `./public/uploads/${fileName}`;
-  const stat = fs.statSync(filePath);
-
-//   res.setHeader('Content-Type', 'video/mp4');
-  res.setHeader('Content-Length', stat.size);
-  res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
-
-  const readStream = fs.createReadStream(filePath);
-  readStream.pipe(res);
-});
-
-// Send file for sockets page
-app.get('/stream', function(req, res) {
-  res.sendFile('streamFile.html', {root: __dirname + "/pages/" })
-});
-
-
-// Host the client pages
-
+// Set up the client page for text sharing
 app.get("/pastclipboard", (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'pasteServerClipboard', 'pasteClipBoard.html'))
 });
 
+// Set up the client page for text sharing
 app.get("/getClipboarddata", (req, res) => {
   res.sendFile(path.join(__dirname, 'pages', 'getServerClipboard', 'copyClipBoard.html'))
 });
+
+// -------------------------------------------------------------------------- //
 
 server.listen(PORT, () => {
   const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
