@@ -1,22 +1,19 @@
 const express = require('express');
 const env = require('dotenv')
-const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
 const http = require('http');
 const spawn = require("child_process").spawn;
+const cors = require('cors');
+const qrcode = require('qrcode-terminal');
+
 const getServerCp = require("./controllers/textEngine/getServerClipoboard")
 const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
-const cors = require('cors');
 const fileUplaod = require('./controllers/fileEngine/upload');
 const listFiles = require('./controllers/fileEngine/listFiles');
-const qrcode = require('qrcode-terminal');
-const e = require('express');
 
 PORT = env.config().parsed.PORT
 
 const app = express();
-
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
