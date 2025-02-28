@@ -9,7 +9,7 @@ const getServerCp = require("./controllers/textEngine/getServerClipoboard")
 const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
 const cors = require('cors');
 const fileUplaod = require('./controllers/fileEngine/upload');
-
+const listFiles = require('./controllers/fileEngine/listFiles');
 const qrcode = require('qrcode-terminal');
 const e = require('express');
 
@@ -55,12 +55,12 @@ app.get("/getClipboarddata", (req, res) => {
 app.get('/getclipboard', getServerCp)
 app.get('/copydataapi', writeServerCp)
 
-// route for clipboard write over post request, flutter connect side
-app.post('/', function(req, res) {
-  data = req.body
-  console.log(data)
-  res.status(201);
-});
+// // route for clipboard write over post request, flutter connect side
+// app.post('/', function(req, res) {
+//   data = req.body
+//   console.log(data)
+//   res.status(201);
+// });
 
 
 app.post('/upload', fileUplaod) 
@@ -73,25 +73,26 @@ app.get('/download/:filename', (req, res) => {
 });
 
 // Set up a route to get the list of files
-app.get('/files', (req, res) => {
-// Use the fs module to read the contents of the folder
-  fs.readdir('./public/uploads', (err, files) => {
-    files.sort((a, b) => {
-      directoryPath = "./public/uploads"
-      const fileA = path.join(directoryPath, a);
-      const fileB = path.join(directoryPath, b);
+// app.get('/files', (req, res) => {
+// // Use the fs module to read the contents of the folder
+//   fs.readdir('./public/uploads', (err, files) => {
+//     files.sort((a, b) => {
+//       directoryPath = "./public/uploads"
+//       const fileA = path.join(directoryPath, a);
+//       const fileB = path.join(directoryPath, b);
   
-      return fs.statSync(fileB).mtime.getTime() - fs.statSync(fileA).mtime.getTime();
-    });
-    if (err) {
-      res.send(err);
-    } else {
-      // Return the array of file names to the client
-      res.send(files);
-    }
-  });
-});
+//       return fs.statSync(fileB).mtime.getTime() - fs.statSync(fileA).mtime.getTime();
+//     });
+//     if (err) {
+//       res.send(err);
+//     } else {
+//       // Return the array of file names to the client
+//       res.send(files);
+//     }
+//   });
+// });
 
+app.get('/files', listFiles)
 // Set up the file download route for client
 app.get('/pool', function(req, res) {
     res.sendFile(path.join(__dirname, 'pages', 'download', 'download.html'));
