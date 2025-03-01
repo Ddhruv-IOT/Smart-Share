@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #121212;
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+        }
+
+        .gallery-item img,
+        .gallery-item video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        /* Buttons */
+        .close-btn,
+        .prev-btn,
+        .next-btn {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .close-btn {
+            top: 10px;
+            right: 10px;
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        .spacer {
+            width: 100%;
+            height: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Gallery</h2>
+    <div class="gallery" id="gallery"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" onclick="closeLightbox()">✖</button>
+        <button class="prev-btn" onclick="prevItem()">◀</button>
+        <button class="next-btn" onclick="nextItem()">▶</button>
+        <div id="lightboxContent"></div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let mediaFiles = [];
+
+        async function fetchFiles() {
+            const response = await fetch("/files");
+            mediaFiles = await response.json();
+
+            const gallery = document.getElementById("gallery");
+            gallery.innerHTML = "";
+
+            mediaFiles.forEach((file, index) => {
+            
+                const ext = file.split('.').pop().toLowerCase();
+                const fileUrl = `/uploads/${file}`;
+                if (["jpg", "jpeg", "png", "gif", "webp", "mp4", "avi", "mkv"].includes(ext))
+                {
+                    const div = document.createElement("div");
+                div.className = "gallery-item";
+                div.onclick = () => openLightbox(index);
+
+                if (["jpg", "jpeg", "png", "gif", "webp"].includes(ext)) {
+                    div.innerHTML = `<img src="${fileUrl}" alt="${file}">`;
+                } else if (["mp4", "avi", "mkv"].includes(ext)) {
+                    div.innerHTML = `<video src="${fileUrl}" muted></video>`;
+                }
+                gallery.appendChild(div);}
+        })
+    }
+
+        function openLightbox(index) {
+            currentIndex = index;
+            const fileUrl = `/uploads/${mediaFiles[currentIndex]}`;
+            const ext = mediaFiles[currentIndex].split('.').pop().toLowerCase();
+            const lightboxContent = document.getElementById("lightboxContent");
+
+            lightboxContent.innerHTML = ext.includes("mp4") || ext.includes("avi") || ext.includes("mkv")
+                ? `<video src="${fileUrl}" controls autoplay class="lightbox-content"></video>`
+                : `<img src="${fileUrl}" class="lightbox-content">`;
+
+            const mediaElement = lightboxContent.firstChild;
+
+            // Add double-click / double-tap download handler
+            let lastTap = 0;
+            mediaElement.addEventListener("click", (event) => {
+                const currentTime = new Date().getTime();
+                if (currentTime - lastTap < 300) { // Detect double-tap (300ms window)
+                    event.preventDefault();
+                    downloadFile(fileUrl);
+                }
+                lastTap = currentTime;
+            });
+
+            document.getElementById("lightbox").classList.add("active");
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").classList.remove("active");
+        }
+
+        function prevItem() {
+            currentIndex = (currentIndex - 1 + mediaFiles.length) % mediaFiles.length;
+            openLightbox(currentIndex);
+        }
+
+        function nextItem() {
+            currentIndex = (currentIndex + 1) % mediaFiles.length;
+            openLightbox(currentIndex);
+        }
+
+        function downloadFile(url) {
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = url.split('/').pop();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        fetchFiles();
+    </script>
+</body>
+
+</html>
