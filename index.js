@@ -10,12 +10,16 @@ const getServerCp = require("./controllers/textEngine/getServerClipoboard")
 const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
 const fileUplaod = require('./controllers/fileEngine/upload');
 const listFiles = require('./controllers/fileEngine/listFiles');
+const downloadFile = require('./controllers/fileEngine/downloader');
+const clientRoutes = require('./routes/clientRoutes');
+
 
 PORT = env.config().parsed.PORT
 
 const app = express();
 const server = http.createServer(app);
 const io = require('socket.io')(server);
+require('./controllers/liveEngine/socketsLive')(io);
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
@@ -24,59 +28,68 @@ app.use(express.static(path.join(__dirname, 'pages', 'upload')));
 app.use(express.static(path.join(__dirname, 'pages', 'download')));
 app.use(express.static(path.join(__dirname, 'pages', 'getServerClipboard')));
 app.use(express.static(path.join(__dirname, 'pages', 'pasteServerClipboard')));
+app.use(express.static(path.join(__dirname, 'pages', "gallery")));
+
 app.use(cors())
 
-
-// Socket Update Enginefor Text
-io.on('connection', (socket) => {
-  console.log('User connected');
-  // Send updates to the client
-  setInterval(() => {
-    const pyProg = spawn('python',["./python-plugins/scr.py"]);
-    pyProg.stdout.on('data', function(data) {  
-      socket.emit('update', { message: data.toString() });
-    });
-  }, 1000);
-});
-
-
 app.get('/getclipboard', getServerCp)
-app.get('/copydataapi', writeServerCp) // # fix naming convention
+app.get('/pasteData', writeServerCp) 
 
 // files
 app.post('/upload', fileUplaod) 
 app.get('/files', listFiles)
+app.get('/download/:filename', downloadFile); // Set up the file download route
 
-// Set up the file download route
-app.get('/download/:filename', (req, res) => {
-  const file = `./public/uploads/${req.params.filename}`;
-  res.download(file);
+//------------ dev features --------------
+
+app.get('/uploads/:fileName', (req, res) => {
+  const fileName = req.params.fileName;
+  const filePath = `./public/uploads/${fileName}`;
+  const stat = fs.statSync(filePath);
+
+// res.setHeader('Content-Type', 'video/mp4');
+  res.setHeader('Content-Length', stat.size);
+  res.setHeader('Content-Disposition', `inline; filename=${fileName}`);
+
+  const readStream = fs.createReadStream(filePath);
+  readStream.pipe(res);
 });
 
-// !--------------- H o s t  t h e  c l i e n t  p a g e s -----------------! //
+const fs = require("fs");
+// const path = require("path");
 
-// Set up the file download route for client
-app.get('/pool', function(req, res) {
-    res.sendFile(path.join(__dirname, 'pages', 'download', 'download.html'));
+app.get("/file-metadata", (req, res) => {
+    const dirPath = path.join(__dirname, "public/uploads");
+
+    fs.readdir(dirPath, (err, files) => {
+        if (err) return res.status(500).json({ error: "Failed to read directory" });
+
+        let metadata = {};
+        files.forEach(file => {
+            const filePath = path.join(dirPath, file);
+            metadata[file] = fs.statSync(filePath).mtime.getTime();
+        });
+
+        res.json(metadata);
+    });
 });
 
-// Set up the file upload route for client
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'upload', 'upload.html'));
+// Send file for sockets page
+app.get('/stream', function(req, res) {
+  res.sendFile(path.join(__dirname, 'pages', 'gallary', 'streamFile.html'))
 });
 
-// Set up the client page for text sharing
-app.get("/pastclipboard", (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'pasteServerClipboard', 'pasteClipBoard.html'))
+
+// ------------------------------------
+// Servers the Frontend
+app.use(clientRoutes);
+
+// Handle unknown routes
+app.use((req, res) => {
+  res.redirect('/');
 });
 
-// Set up the client page for text sharing
-app.get("/getClipboarddata", (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages', 'getServerClipboard', 'copyClipBoard.html'))
-});
-
-// -------------------------------------------------------------------------- //
-
+// Start the server
 server.listen(PORT, () => {
   const getIp = spawn('python', ["./python-plugins/ip_finder.py"]);
   getIp.stdout.on('data', (ip) => {  
