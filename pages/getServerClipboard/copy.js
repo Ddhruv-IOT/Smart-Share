@@ -17,9 +17,29 @@ onload = () => {
 
 function copyToClipboard() {
     const text = document.getElementById("clipboardText").textContent;
-    navigator.clipboard.writeText(text).then(() => {
-    });
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text)
+            .then(() => console.log("Copied successfully!"))
+            .catch(err => console.error("Clipboard error:", err));
+    } else {
+        // Fallback method for HTTP
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        try {
+            document.execCommand("copy");
+            console.log("Copied using fallback method!");
+        } catch (err) {
+            console.error("Fallback copy failed:", err);
+        }
+
+        document.body.removeChild(textArea);
+    }
 }
+
 
 function toggleLiveUpdate() {
     liveUpdate = document.getElementById("liveUpdateToggle").checked;
