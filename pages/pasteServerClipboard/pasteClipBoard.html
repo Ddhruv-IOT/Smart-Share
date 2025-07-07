@@ -1,8 +1,3 @@
-<form action="/pasteData" method="get" >
-    <input type="text" name="x">
-    <input type="submit">
-</form>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="download.css"/>
     <link rel="stylesheet" href="textpaste.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <title>Upload Page</title>
 </head>
 
@@ -47,11 +44,24 @@
                                 <textarea id="fileInput" name="x" rows="10" cols="70" class="f"></textarea>
                             </label>
                         </div>
-                        <!-- <div class="rbtn-submit" id="uploadButton"> Submit </div> -->
-                        <button type="submit" class="rbtn-submit" id="uploadButton"> Submit </button>
-
+                        <button type="submit" class="rbtn-submit" id="uploadButton" onclick="copy()">Submit</button>
                     </form>                  
         </div>
     </div>
 </body>
+<script>
+    function copy()
+    {
+        Toastify({
+            text: "Text Copied!",
+            duration: 900,
+            gravity: "bottom", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            stopOnFocus: false, // Prevents dismissing of toast on hover
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+        }).showToast();
+    }
+</script>
 </html>
