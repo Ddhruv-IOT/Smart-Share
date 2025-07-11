@@ -161,9 +161,9 @@ form > .rbtn-submit {
     cursor: pointer;
 }
 
-#fileName {
-    overflow: hidden;
-}
+/* #fileName {
+    overflow: wrap;
+} */
 
 .rbtn-browse, .rbtn-submit {
     transition: transform 0.2s ease-in-out;
