@@ -15,6 +15,8 @@ const clientRoutes = require('./routes/clientRoutes');
 
 
 PORT = env.config().parsed.PORT
+DIRECTORY = env.config().parsed.DIRECTORY
+
 
 const app = express();
 const server = http.createServer(app);
@@ -24,6 +26,8 @@ require('./controllers/liveEngine/socketsLive')(io);
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname+'/public/'));
+app.use(express.static(DIRECTORY));
+
 app.use(express.static(path.join(__dirname, 'pages', 'upload')));
 app.use(express.static(path.join(__dirname, 'pages', 'download')));
 app.use(express.static(path.join(__dirname, 'pages', 'getServerClipboard')));
@@ -44,7 +48,7 @@ app.get('/download/:filename', downloadFile); // Set up the file download route
 
 app.get('/uploads/:fileName', (req, res) => {
   const fileName = req.params.fileName;
-  const filePath = `./public/uploads/${fileName}`;
+  const filePath = `${DIRECTORY}/${fileName}`;
   const stat = fs.statSync(filePath);
 
 // res.setHeader('Content-Type', 'video/mp4');
@@ -59,14 +63,14 @@ const fs = require("fs");
 // const path = require("path");
 
 app.get("/file-metadata", (req, res) => {
-    const dirPath = path.join(__dirname, "public/uploads");
+    // const DIRECTORY = path.join(__dirname, "public/uploads");
 
-    fs.readdir(dirPath, (err, files) => {
+    fs.readdir(DIRECTORY, (err, files) => {
         if (err) return res.status(500).json({ error: "Failed to read directory" });
 
         let metadata = {};
         files.forEach(file => {
-            const filePath = path.join(dirPath, file);
+            const filePath = path.join(DIRECTORY, file);
             metadata[file] = fs.statSync(filePath).mtime.getTime();
         });
 
@@ -84,10 +88,10 @@ app.get('/stream', function(req, res) {
 // Servers the Frontend
 app.use(clientRoutes);
 
-// Handle unknown routes
-app.use((req, res) => {
-  res.redirect('/');
-});
+// // Handle unknown routes
+// app.use((req, res) => {
+//   res.redirect('/');
+// });
 
 // Start the server
 server.listen(PORT, () => {
