@@ -1,8 +1,8 @@
-const path = require('path');
-const fs = require('fs');
+const DIRECTORY = require('dotenv').config().parsed.DIRECTORY
+
 
 const downloadFile = (req, res) => {
-    const file = `./public/uploads/${req.params.filename}`;
+    const file = `${DIRECTORY}/${req.params.filename}`;
     res.download(file);
 }
 
