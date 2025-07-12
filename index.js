@@ -7,7 +7,7 @@ const cors = require('cors');
 const qrcode = require('qrcode-terminal');
 
 const getServerCp = require("./controllers/textEngine/getServerClipoboard")
-const writeServerCp = require("./controllers/textEngine/writeServerClipboard")
+const {writeServerCp} = require("./controllers/textEngine/writeServerClipboard")
 const fileUplaod = require('./controllers/fileEngine/upload');
 const listFiles = require('./controllers/fileEngine/listFiles');
 const downloadFile = require('./controllers/fileEngine/downloader');
