@@ -1,12 +1,12 @@
 const path = require('path');
 const fs = require('fs');
+const DIRECTORY = require('dotenv').config().parsed.DIRECTORY
 
 const listFiles = (req, res) => {
-    fs.readdir('./public/uploads', (err, files) => {
+    fs.readdir(DIRECTORY, (err, files) => {
         files.sort((a, b) => {
-          directoryPath = "./public/uploads"
-          const fileA = path.join(directoryPath, a);
-          const fileB = path.join(directoryPath, b);
+          const fileA = path.join(DIRECTORY, a);
+          const fileB = path.join(DIRECTORY, b);
       
           return fs.statSync(fileB).mtime.getTime() - fs.statSync(fileA).mtime.getTime();
         });
