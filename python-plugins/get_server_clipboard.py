@@ -1,6 +1,8 @@
 import sys
 import os
 import subprocess
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def is_termux():
     return "TERMUX_VERSION" in os.environ
