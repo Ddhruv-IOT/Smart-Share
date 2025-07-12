@@ -5,7 +5,6 @@ const { clipboardDataRef } = require("./writeServerClipboard");
 var getServerCp = (req, res) => {
     if (Clipboard_Mode === "DEDICATED") {
         const data = clipboardDataRef();
-        console.log(data)
         if (!data) return res.status(404).send('No clipboard data available');
         return res.status(200).send(data);
     }
