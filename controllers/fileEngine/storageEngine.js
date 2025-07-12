@@ -1,10 +1,10 @@
 const multer = require("multer");
 const path = require("path");
-
+const DIRECTORY = require('dotenv').config().parsed.DIRECTORY
 
 // Set up the storage engine
 const storage = multer.diskStorage({
-    destination: "./public/uploads/",
+    destination: DIRECTORY,
     filename: function (req, file, cb) {
       cb(
         null,
